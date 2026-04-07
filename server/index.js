@@ -18,33 +18,12 @@ mongoose.connect(process.env.MONGODB_URI)
 
 app.use(express.json())
 
+const authRoutes = require("./routes/auth")
+app.use('/api/auth',authRoutes)
+
 app.get('/',(req,res)=>{
     res.send("Chat flow server is running ");
 })
-app.post("/api/test-user",async(req,res)=>{
-    try{
-        const User = require('./models/User');
-
-        const newUser = new User({
-            name : req.body.name,
-            email : req.body.email,
-            password : req.body.password
-        })
-
-        const savedUser = await newUser.save()
-
-        res.status(201).json({
-            message: "User saved successfully",
-            user : savedUser
-        })
-    }catch(error){
-        res.status(400).json({
-            message: "Error saving user",
-            error : error.message
-        })
-
-    }
-});
 
 app.listen(port,()=>{
     console.log(`Server is listening at port ${port}`);
