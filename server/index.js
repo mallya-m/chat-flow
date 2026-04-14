@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose");  
 
 
 const app = express();
@@ -20,6 +20,15 @@ app.use(express.json())
 
 const authRoutes = require("./routes/auth")
 app.use('/api/auth',authRoutes)
+ 
+const authMiddleware = require('./middleware/authMiddleware')
+
+app.get('/api/protected', authMiddleware, (req, res) => {
+  res.status(200).json({
+    message: 'You are inside a protected route',
+    user: req.user
+  })
+})
 
 app.get('/',(req,res)=>{
     res.send("Chat flow server is running ");
