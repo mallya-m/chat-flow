@@ -21,6 +21,9 @@ app.use(express.json())
 const authRoutes = require("./routes/auth")
 app.use('/api/auth',authRoutes)
  
+const roomRoutes = require('./routes/rooms')
+app.use('/api/rooms', roomRoutes) 
+
 const authMiddleware = require('./middleware/authMiddleware')
 
 app.get('/api/protected', authMiddleware, (req, res) => {
