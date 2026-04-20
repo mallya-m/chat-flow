@@ -3,6 +3,9 @@ const router = express.Router()
 const { body, validationResult } = require('express-validator')
 const Room = require('../models/Room')
 const authMiddleware = require('../middleware/authMiddleware')
+const messageRoutes = require('./messages')
+
+router.use('/:roomId/messages', messageRoutes)
 
 router.post('/',
   authMiddleware,
